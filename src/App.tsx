@@ -47,7 +47,7 @@ function App() {
       <div className="main-board">
         <header className="board-header">
           <h1 className="title">🛍️ Kaizen E-Commerce</h1>
-          <p className="subtitle">Discover amazing products</p>
+          <p className="subtitle">Test CI/CD</p>
         </header>
 
         <div className="content-section">

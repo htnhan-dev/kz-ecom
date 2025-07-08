@@ -27,7 +27,6 @@ function App() {
       }
 
       const { data }: { data: Product[] } = await res.json();
-      console.log("☄️ ~ :29 ~ data:", data);
       setProducts(data);
     } catch (err) {
       const errorMessage =
@@ -94,7 +93,18 @@ function App() {
                   </div>
                 ))
               ) : (
-                <div className="empty-state">
+                <div
+                  className="empty-state"
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    height: "100%",
+                    color: "#6c757d",
+                  }}
+                >
                   <p>📦 No products found</p>
                   <button onClick={fetchData} className="refresh-btn">
                     🔄 Refresh

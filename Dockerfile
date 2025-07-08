@@ -1,10 +1,25 @@
-FROM node:20-alpine
+# Base image
+FROM node:20
 
+# Set working dir
 WORKDIR /app
-COPY . .
+
+# Copy package files
+COPY package*.json ./
+
+# Install dependencies
 RUN npm install
+
+# Copy rest of the project
+COPY . .
+
+# Build Vite
 RUN npm run build
 
-# serve build bằng vite preview
-EXPOSE 4173
+# Use nginx to serve built files (optional: if static deploy)
+# FROM nginx:alpine
+# COPY --from=0 /app/dist /usr/share/nginx/html
+
+# If just preview
+EXPOSE 5173
 CMD ["npm", "run", "preview"]

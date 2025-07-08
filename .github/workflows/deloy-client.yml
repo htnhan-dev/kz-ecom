@@ -20,15 +20,22 @@ jobs:
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Deploy API via SSH
+      - name: Deploy CLIENT via SSH
+        env:
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
         run: |
-          ssh -i ~/.ssh/id_ed25519 ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'EOF'
-            cd /root/applications/kz-ecom/client
-            echo "🛠 Pulling latest changes"
-            git pull origin main
-            
-            cd ..
+          ssh -i ~/.ssh/id_ed25519 $SERVER_USER@$SERVER_HOST << 'EOF'
+            set -e  # dừng nếu có lỗi
 
-            echo "🚀 Rebuilding client container"
+            echo "📁 Moving to client folder"
+            cd /root/applications/kz-ecom
+
+            echo "📦 Pulling latest source"
+            git pull origin main
+
+            echo "🚧 Building client container"
             docker compose up -d --build client
+
+            echo "✅ Client deployed successfully"
           EOF

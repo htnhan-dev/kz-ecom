@@ -26,16 +26,16 @@ jobs:
           SERVER_HOST: ${{ secrets.SERVER_HOST }}
         run: |
           ssh -i ~/.ssh/id_ed25519 $SERVER_USER@$SERVER_HOST << 'EOF'
-            set -e  # dừng nếu có lỗi
+            set -e
 
-            echo "📁 Moving to client folder"
-            cd /root/applications/kz-ecom
+            echo "📁 Moving to client repo folder"
+            cd /root/applications/kz-ecom/client
 
-            echo "📦 Pulling latest source"
+            echo "📦 Pulling latest client source"
             git pull origin main
 
-            echo "🚧 Building client container"
+            echo "🚧 Rebuilding only client container"
             docker compose up -d --build client
 
-            echo "✅ Client deployed successfully"
+            echo "✅ Client deployed"
           EOF
